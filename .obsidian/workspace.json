@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DAW25-26/Despliegue/Docker/DockerRun.md",
+                "file": "DAW25-26/DAWC/Promise.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "DockerRun"
+              "title": "Promise"
             }
           }
         ],
@@ -165,13 +165,23 @@
               "icon": "lucide-list",
               "title": "Esquema de Bienvenido"
             }
+          },
+          {
+            "id": "35a4bf83d9022ec8",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -187,12 +197,14 @@
   },
   "active": "f1e44f73bbd50b78",
   "lastOpenFiles": [
-    "DAW25-26/DAWC/JavaScript.md",
     "DAW25-26/DAWC/Promise.md",
+    "Sin título.md",
+    "DAW25-26/DAWC/JavaScript.md",
+    "DAW25-26/Despliegue/Docker/DockerRun.md",
+    "DAW25-26/DIW/Docker/Docker.md",
     "Pasted image 20251107123053.png",
     "Pasted image 20251107123047.png",
     "Pasted image 20251107123044.png",
-    "DAW25-26/Despliegue/Docker/DockerRun.md",
     "Bienvenido.md",
     "DAW25-26/DIW/SCSS",
     "DAW25-26/DIW/Docker",

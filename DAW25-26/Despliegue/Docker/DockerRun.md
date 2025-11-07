@@ -1,4 +1,4 @@
-# A) Con `docker run` (estilo profesor)
+# A) Con `docker run`
 
 ## 1) Comandos base y significado
 
