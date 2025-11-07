@@ -1,0 +1,208 @@
+{
+  "main": {
+    "id": "97757ff7df4dff58",
+    "type": "split",
+    "children": [
+      {
+        "id": "64dcf455633a912a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0f8dc381758578a8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "DAW25-26/DAWC/Promise.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Promise"
+            }
+          },
+          {
+            "id": "ee6a2b9f9eab8301",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "DAW25-26/Despliegue/Docker/DockerRun.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "DockerRun"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4b4b0425723f7198",
+    "type": "split",
+    "children": [
+      {
+        "id": "747c7f1c97b41bb3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f1e44f73bbd50b78",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de archivos"
+            }
+          },
+          {
+            "id": "12bb032ddbf32d02",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Buscar"
+            }
+          },
+          {
+            "id": "6ccfffe144088800",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 200
+  },
+  "right": {
+    "id": "f4fb6ca65f66fded",
+    "type": "split",
+    "children": [
+      {
+        "id": "a529d188d69ef090",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f2b2128c7ed6d8f6",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Bienvenido.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Enlaces entrantes de Bienvenido"
+            }
+          },
+          {
+            "id": "069aa9c6e4e09a9c",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Bienvenido.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Enlaces salientes de Bienvenido"
+            }
+          },
+          {
+            "id": "7f586662c2ab4113",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "d7001d31a9493252",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Bienvenido.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Esquema de Bienvenido"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false,
+      "bases:Crear nueva base": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "f1e44f73bbd50b78",
+  "lastOpenFiles": [
+    "DAW25-26/DAWC/JavaScript.md",
+    "DAW25-26/DAWC/Promise.md",
+    "Pasted image 20251107123053.png",
+    "Pasted image 20251107123047.png",
+    "Pasted image 20251107123044.png",
+    "DAW25-26/Despliegue/Docker/DockerRun.md",
+    "Bienvenido.md",
+    "DAW25-26/DIW/SCSS",
+    "DAW25-26/DIW/Docker",
+    "DAW25-26/DIW",
+    "DAW25-26/Despliegue/Proxmox",
+    "DAW25-26/Despliegue/AWS",
+    "DAW25-26/Despliegue/Docker",
+    "DAW25-26/Despliegue/MV",
+    "DAW25-26/Despliegue",
+    "DAW25-26/DAWS",
+    "DAW25-26/DAWC"
+  ]
+}
