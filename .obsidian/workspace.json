@@ -27,16 +27,30 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "DAW25-26/DAWC/Promise.md",
+                "file": "DAW25-26/Despliegue/Proxmox/Camisetas.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Promise"
+              "title": "Camisetas"
+            }
+          },
+          {
+            "id": "e5c2e1b6cc364dff",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "DAW25-26/Despliegue/Proxmox/HTTP - HTTPS.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "HTTP - HTTPS"
             }
           }
         ],
-        "currentTab": 1
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -157,13 +171,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Bienvenido.md",
+                "file": "DAW25-26/Despliegue/AWS/S3.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Esquema de Bienvenido"
+              "title": "Esquema de S3"
             }
           },
           {
@@ -181,7 +195,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 322.5
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -195,13 +209,31 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "35a4bf83d9022ec8",
+  "active": "e5c2e1b6cc364dff",
   "lastOpenFiles": [
-    "Sin título.md",
-    "DAW25-26/DAWC/Promise.md",
-    "DAW25-26/DAWC/JavaScript.md",
+    "DAW25-26/Despliegue/Proxmox/NGINX.md",
+    "DAW25-26/DAWC/Arrow functions.md",
     "DAW25-26/Despliegue/Docker/DockerRun.md",
+    "DAW25-26/DIW/Docker/Vite + Vue - Typscript + Git.md",
     "DAW25-26/DIW/Docker/Docker.md",
+    "DAW25-26/DIW/Docker/Vite + Preact+ Ngrok + Nginx.md",
+    "DAW25-26/DAWS/JKARTA.md",
+    "DAW25-26/Despliegue/Proxmox/Camisetas.md",
+    "DAW25-26/Despliegue/Proxmox/HTTP - HTTPS.md",
+    "DAW25-26/Despliegue/Proxmox/PHP con BD.md",
+    "DAW25-26/Despliegue/Proxmox/PHP sin BD.md",
+    "DAW25-26/Despliegue/Proxmox/NGINX con APACHE.md",
+    "Sin título.md",
+    "DAW25-26/Despliegue/Docker/DockerCompose.md",
+    "DAW25-26/DIW/Docker/Sin título.md",
+    "DAW25-26/DAWC/Promise.md",
+    "DAW25-26/DAWC/FETCH.md",
+    "DAW25-26/Despliegue/Docker/HTTP - HTTPS.md",
+    "DAW25-26/Despliegue/Docker/Instalar Docker.md",
+    "DAW25-26/Despliegue/AWS/S3.md",
+    "DAW25-26/Despliegue/AWS/02. VPC.md",
+    "DAW25-26/Despliegue/AWS/VPC.md",
+    "DAW25-26/DAWC/JavaScript.md",
     "Pasted image 20251107123053.png",
     "Pasted image 20251107123047.png",
     "Pasted image 20251107123044.png",

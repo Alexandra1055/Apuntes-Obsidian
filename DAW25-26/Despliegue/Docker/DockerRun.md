@@ -30,6 +30,8 @@ docker stop <nombre>   # parar
 docker rm <nombre>     # eliminar (si está parado)
 docker rm -f <nom>     # forzar eliminación aunque esté arrancado
 docker rm -f $(docker ps -a -q)  # limpiar todos (con cuidado)
+docker start <nombre>  #para iniciar los contendores parados
+docker rmi <nombre_imagen>       #para eliminar la imagen
 ```
 
 ### Ejecutar comandos dentro del contenedor
@@ -66,10 +68,30 @@ docker run -d --network llibres --name web -p 8001:80 php:apache   # unir a red
 docker run -d -p 80:80 --name web httpd
 docker ps
 docker exec -it web ls /usr/local/apache2/htdocs
+```
+
+ >[!warning] Si el git no esta instalado:
+```bash
+sudo apt install git -y
+git config --global user.name "Alexandra1055"
+git config --global user.email "agonzalez1055@alumnes.politecnicllevant.cat"
+
+```
+
+```bash
+git clone https://github.com/antonimoragues/llista-camisetes.git
 docker cp llista-camisetes/. web:/usr/local/apache2/htdocs
-docker cp images-camisetes/. web:/usr/local/apache2/htdocs/images
-# (opcional)
-docker exec -it web bash
+# (comprobamos)
+http://ip-publica
+```
+
+Ahora descargaríamos las imágenes (si nos lo pide) y las pasamos a la maquina con:
+```bash
+scp -i "prueba.pem" -r "/d/Documentos/DAW25-26/Desplegament/llista-camisetes/images/." admin@44.200.227.108:~/llista-camisetes/images/
+#admin@ip-publica de la maquina
+#-r "ruta completa con /." recursivamente que copie lo que hay dentro
+docker cp images/. web:/usr/local/apache2/htdocs/images
+#Comprobamos -> (actualizamos el navegador y saldran las imagenes)
 ```
 
 > `DocumentRoot (httpd)`: `/usr/local/apache2/htdocs`  
@@ -79,21 +101,24 @@ docker exec -it web bash
 
 ### 2.2 PHP con Apache (`php:apache`)
 
-**Opción A (montar carpeta del host, ejemplo Windows del profe):**
-```powershell
-docker run -d -p 80:80 --name php ^
-  -v "C:\Users\Alexandra\...\PHP":/var/www/html ^
-  php:7.2-apache
-```
-
-**Opción B (copiar el código al contenedor):**
+#### Copiar el código al contenedor:
 ```bash
 docker run -d --name php -p 8000:80 php:apache
+docker run -d --name asix-img -p 81:80 php:apache
 docker exec -it php bash -lc "echo '<?php phpinfo(); ?>' > /var/www/html/info.php"
+docker exec -it asix-img bash -lc "echo '<?php phpinfo(); ?>' > /var/www/html/info.php"
+#comprobamos: http://ip-publica:8000/info.php
 
-git clone -b json https://github.com/antonimoragues/llibres llibres-json
+git clone -b json https://github.com/antonimoragues/daw.git daw
 docker cp llibres-json/.    php:/var/www/html
-docker cp imatges-llibres/. php:/var/www/html/images
+```
+
+Como antes, descargamos y pegamos las imágenes:
+```bash
+scp -i "prueba.pem" -r "/d/Documentos/DAW25-26/Desplegament/imatges/." admin@44.200.227.108:~/llibres-json/images/
+
+docker cp images/. php:/var/www/html/images
+#comprobamos: http://ip-publica:8000/list.php
 ```
 
 > `DocumentRoot (php:apache)`: `/var/www/html` (**distinto** de `httpd`).
@@ -103,6 +128,10 @@ docker cp imatges-llibres/. php:/var/www/html/images
 ### 2.3 MariaDB + importar datos
 ```bash
 docker run -d --name db -e MARIADB_ROOT_PASSWORD=secret mariadb
+
+git clone -b database https://github.com/antonimoragues/llibres llibres-db
+
+
 docker cp books.sql db:/tmp
 docker exec -it db bash
 mariadb -uroot -psecret -e "CREATE DATABASE IF NOT EXISTS llibres CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
@@ -113,11 +142,61 @@ mariadb -uroot -psecret -e "USE llibres; SHOW TABLES;"
 - `-e MARIADB_ROOT_PASSWORD=secret`: inicializa **password de root**.
 - Comprobación rápida: `SHOW TABLES;`.
 
+>[!warning] OJO! si es mariadb o mysql
+### 2.3.1 MYSQL
+Si en lugar de mariaDB es MySQL
+```bash
+
+# (ahora) MySQL:
+docker run -d --name db -e MYSQL_ROOT_PASSWORD=secret mysql:8
+
+# (antes) MariaDB con volumen:
+# docker run -d --name db -e MARIADB_ROOT_PASSWORD=secret mariadb
+
+# Descargar los SQL (igual que antes)
+git clone -b database https://github.com/antonimoragues/llibres llibres-db
+
+# Copiar el SQL dentro del contenedor
+docker cp llibres-db/books.sql db:/tmp
+
+# Entrar al contenedor y cargar la BD
+docker exec -it db bash
+
+# Crear la base de datos con UTF-8 moderno
+mysql -uroot -psecret -e "CREATE DATABASE IF NOT EXISTS llibres CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+# Importar datos
+mysql -uroot -psecret llibres < /tmp/books.sql
+
+# Comprobación
+mysql -uroot -psecret -e "USE llibres; SHOW TABLES;"
+
+# salir si quieres
+exit
+
+# Red mas abajo (quedaria igual el comando):
+docker network connect llibres db
+
+```
+
 ---
 
 ### 2.4 Extensiones PHP (MySQL)
 ```bash
-docker exec -it php bash -lc "docker-php-ext-install mysqli pdo pdo_mysql && apache2ctl -k graceful"
+docker run -d --name mysql-php -p 8001:80 php:apache
+docker exec -it mysql-php bash -lc "docker-php-ext-install mysqli pdo pdo_mysql && apache2ctl -k graceful"
+```
+Editamos el Host de la base de datos con el nombre del contenedor donde tenemos la base de datos:
+```bash
+#instalamos nano
+sudo apt update
+sudo apt install -y nano
+
+#editamos el archivo
+sudo nano list.php #dbHost = getenv('DB_HOST') ?: 'db';
+#comprobamos (cat list.php)
+
+docker cp llibres-db/. mysql-php:/var/www/html
 ```
 
 - `docker-php-ext-install`: instalador de extensiones en imágenes **oficiales** PHP.
@@ -126,19 +205,49 @@ docker exec -it php bash -lc "docker-php-ext-install mysqli pdo pdo_mysql && apa
 ---
 
 ### 2.5 Redes Docker (DNS interno por nombre)
+
 ```bash
 docker network create llibres
-docker run -d --name db --network llibres -e MARIADB_ROOT_PASSWORD=secret mariadb
-docker run -d --network llibres -p 8000:80 --name admin -e PMA_HOST=db phpmyadmin
-docker run -d --network llibres --name web -p 8001:80 php:apache
+docker network connect llibres db
+docker network connect llibres mysql-php
+
+docker network remove llibres #para eliminar la network
 ```
 
 - En la **misma red**, `db` se resuelve por **nombre**.
 - `PMA_HOST=db` le dice a phpMyAdmin dónde está la base de datos.
+-
+>Comprobaciones rápidas de network:
+```bash
+# ¿Existe la red?
+docker network ls | grep llibres
+
+# ¿Está 'db' en esa red?
+docker inspect -f '{{json .NetworkSettings.Networks}}' db | jq
+
+# (o sin jq)
+docker inspect -f '{{range $k,$v := .NetworkSettings.Networks}}{{$k}} {{end}}' db
+```
 
 ---
+### 2.6 PHPMyAdmin
+```bash
+docker run -d --name phpmyadmin \
+  --network llibres \
+  -p 8083:80 \
+  -e PMA_HOST=db \
+  -e PMA_USER=root \
+  -e PMA_PASSWORD=secret \
+  phpmyadmin/phpmyadmin
+  
+  #opcional: se podria añadir para que apunte al puerto mysql
+  -e PMA_PORT=3306 \
+  
+  #comprobamos: http://IP-PUBLICA:8083
+```
 
-### 2.6 Volumen para persistencia de MariaDB
+---
+### 2.7 Volumen para persistencia de MariaDB
 ```bash
 docker volume create db-llibres
 docker run -d --name db --network llibres \
@@ -151,7 +260,7 @@ docker run -d --name db --network llibres \
 
 ---
 
-### 2.7 VirtualHost y SSL **dentro** del contenedor (laboratorio)
+### 2.8 VirtualHost y SSL **dentro** del contenedor (laboratorio)
 
 **Crear/editar VirtualHost:**
 ```bash
@@ -190,116 +299,37 @@ docker exec -it apache bash -lc "apachectl -k restart"
 
 ---
 
-### 2.8 Limpieza
+### 2.9 Limpieza
 ```bash
 docker ps -a
 docker rm -f web php db admin apache || true
 ```
 
----
-
-# B) Con `docker compose` (mismo flujo empaquetado)
-
-**Mismas ideas** pero declaradas en un archivo.  
-Comandos clave: `docker compose up -d`, `ps`, `logs`, `exec`, `cp`, `down`.
-
-## 1) Crear `docker-compose.yml`
-```bash
-cat > docker-compose.yml <<'YML'
-services:
-  db:
-    image: mariadb
-    container_name: db
-    environment:
-      - MARIADB_ROOT_PASSWORD=secret
-    volumes:
-      - db-llibres:/var/lib/mysql
-    networks:
-      - llibres
-
-  admin:
-    image: phpmyadmin
-    container_name: admin
-    environment:
-      - PMA_HOST=db
-    ports:
-      - "8000:80"
-    depends_on:
-      - db
-    networks:
-      - llibres
-
-  web:
-    image: php:apache
-    container_name: web
-    ports:
-      - "8001:80"
-    networks:
-      - llibres
-
-  # Opcional: httpd para sitio estático en 80
-  httpd:
-    image: httpd
-    container_name: web-static
-    ports:
-      - "80:80"
-    networks:
-      - llibres
-
-volumes:
-  db-llibres:
-
-networks:
-  llibres:
-    driver: bridge
-YML
-```
-
-## 2) Levantar, ver y parar
-```bash
-docker compose up -d
-docker compose ps
-docker compose logs -f web
-docker compose down        # para (sin borrar volúmenes)
-docker compose down -v     # para y borra volúmenes
-```
-
-## 3) Copias y comandos (igual que con `run`)
-
-**Copiar web estática a `httpd`:**
-```bash
-docker cp llista-camisetes/.   web-static:/usr/local/apache2/htdocs
-docker cp images-camisetes/.   web-static:/usr/local/apache2/htdocs/images
-```
-
-**Copiar app PHP:**
-```bash
-docker cp llibres-json/.       web:/var/www/html
-docker cp imatges-llibres/.    web:/var/www/html/images
-```
-
-**Importar SQL:**
-```bash
-docker cp books.sql            db:/tmp
-docker compose exec db bash -lc \
-  "mariadb -uroot -psecret -e 'CREATE DATABASE IF NOT EXISTS llibres CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;' && \
-   mariadb -uroot -psecret llibres < /tmp/books.sql && \
-   mariadb -uroot -psecret -e 'USE llibres; SHOW TABLES;'"
-```
-
-**Instalar extensiones PHP:**
-```bash
-docker compose exec web bash -lc "docker-php-ext-install mysqli pdo pdo_mysql && apache2ctl -k graceful"
-```
-
-> Para VirtualHosts/SSL usa los **mismos comandos** que en la sección A, pero con  
-> `docker compose exec web ...` en lugar de `docker exec apache ...`.
 
 ---
 
 ## Chuleta rápida — DocumentRoot por imagen
+Para saber cual es el directorio que usa la imagen:
+```bash
+docker exec -it <nombre_contenedor> pwd
+```
 
-| Imagen     | DocumentRoot                     |
-|-----------:|----------------------------------|
-| `httpd`    | `/usr/local/apache2/htdocs`      |
-| `php:apache` | `/var/www/html`                |
+|       Imagen | DocumentRoot                |
+| -----------: | --------------------------- |
+|      `httpd` | `/usr/local/apache2/htdocs` |
+| `php:apache` | `/var/www/html`             |
+PROXMOX
+**FALTA REDIRECT y ALIAS
+
+ssh -i agonzalez root@10.100.78.207
+//entramos en el insti
+
+ssh -i agonzalez -p 20722 [root@ifc.politecnicllevant.cat](mailto:root@ifc.politecnicllevant.cat)
+//para entrar a proxmos desde cada
+
+IMPORTANTE:
+Si falla al intentar entrar, usar este comando
+ssh-keygen -R 10.100.78.207
+
+Ahora puedo entrar desde:
+ssh proxmox-cable
